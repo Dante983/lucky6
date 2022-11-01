@@ -22,3 +22,57 @@
     color: #FFFFFF;
     background-color: #00A4BD;
 }
+.dropdown-a {
+    position: relative;
+}
+
+.dropdown-a:before {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #f00;
+}
+
+.dropdown-a:after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 3px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #333;
+}
+.dropdown-a {
+    position: relative;
+}
+
+.dropdown-a:before {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 8px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #f00;
+}
+
+.dropdown-a:after {
+    content: "";
+    position: absolute;
+    right: 10px;
+    top: 3px;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #333;
+}

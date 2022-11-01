@@ -1,4 +1,4 @@
-@extends('main')
+@extends('admin_main')
 
 @section('content')
 
@@ -13,9 +13,9 @@
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class="card">
-                <div class="card-header">Login</div>
+                <div class="card-header">Admin Login</div>
                 <div class="card-body">
-                    <form action="{{ route('validate_login') }}" method="post">
+                    <form action="{{ route('admin_validate_login') }}" method="post">
                         @csrf
                         <div class="form-group mb-3">
                             <input type="text" name="email" class="form-control" placeholder="Email" />
@@ -30,7 +30,7 @@
                             @endif
                         </div>
                         <div class="d-grid mx-auto">
-                            <button type="subit" class="btn btn-dark btn-block">Login</button>
+                            <button type="submit" class="btn btn-dark btn-block">Login</button>
                         </div>
                     </form>
                 </div>
