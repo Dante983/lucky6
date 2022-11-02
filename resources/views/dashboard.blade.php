@@ -94,6 +94,18 @@
                 </tr>
                 </tbody>
             </table>
+{{--            <table>--}}
+{{--                <tbody>--}}
+{{--                <?php for ($i = 0; $i < 10; $i++) : ?>--}}
+{{--                <tr>--}}
+{{--                        <?php for ($k = 0; $k < 10; $k++) : ?>--}}
+{{--                        <?php $num = rand(1, 10); ?>--}}
+{{--                    <td style="color: <?= $num < 5 ? 'red' : 'green'; ?>; padding-bottom: 5px; padding-left: 10px"><?= $num; ?></td>--}}
+{{--                    <?php endfor; ?>--}}
+{{--                </tr>--}}
+{{--                <?php endfor; ?>--}}
+{{--                </tbody>--}}
+{{--            </table>--}}
         </div>
     </div>
 
