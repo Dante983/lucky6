@@ -33,79 +33,75 @@
     </div>
 
 {{--    <div class="card-body" style="position: relative; float: right">Vrijeme</div>--}}
+    <div >
+        <h1 style="text-align: center">Countdown Clock</h1>
+        <div id="clockdiv">
+            <div>
+                <span class="minutes"></span>
+                <div style="text-align: center" class="smalltext">Minutes</div>
+            </div>
+            <div>
+                <span class="seconds"></span>
+                <div style="text-align: center" class="smalltext">Seconds</div>
+            </div>
+        </div>
+    </div>
+
     <div class="card" style="margin-top: 50px">
         <div class="card-header">Tickets</div>
         <div class="card-body">
-{{--            <table class="GeneratedTable">--}}
-{{--                <tbody>--}}
-{{--                <tr>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                </tr>--}}
-{{--                <tr>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>6 <input type="checkbox" name="number[6]"></td>--}}
-{{--                </tr>--}}
-{{--                <tr>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td style="color: white; background-color: white; border-radius: 0;"></td>--}}
-{{--                    <td style="color: white; background-color: white; border-radius: 0;"></td>--}}
-{{--                </tr>--}}
-{{--                </tbody>--}}
-{{--            </table>--}}
-            <table>
+            <table class="GeneratedTable">
                 <tbody>
-                <?php for ($i = 0; $i < 10; $i++) : ?>
-                <tr>
-                        <?php for ($k = 0; $k < 10; $k++) : ?>
-                        <?php $num = rand(1, 10); ?>
-                    <td style="color: <?= $num < 5 ? 'red' : 'green'; ?>; padding-bottom: 5px; padding-left: 10px"><?= $num; ?></td>
-                    <?php endfor; ?>
-                </tr>
-                <?php endfor; ?>
+                    <tr>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                    </tr>
+                    <tr>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                    </tr>
+                    <tr>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                        <td>Cell</td>
+                    </tr>
                 </tbody>
             </table>
+{{--            <table>--}}
+{{--                <tbody>--}}
+{{--                <?php for ($i = 0; $i < 10; $i++) : ?>--}}
+{{--                <tr>--}}
+{{--                        <?php for ($k = 0; $k < 10; $k++) : ?>--}}
+{{--                        <?php $num = rand(1, 10); ?>--}}
+{{--                    <td style="color: <?= $num < 5 ? 'red' : 'green'; ?>; padding-bottom: 5px; padding-left: 10px"><?= $num; ?></td>--}}
+{{--                    <?php endfor; ?>--}}
+{{--                </tr>--}}
+{{--                <?php endfor; ?>--}}
+{{--                </tbody>--}}
+{{--            </table>--}}
         </div>
     </div>
 
@@ -117,11 +113,30 @@
         </div>
     </div>
 
-    <div class="card" style="margin-top: 50px; float: right; width: 640px">
-        <div class="card-header">Create ticket</div>
-        <div class="card-body">
-            <button class="accordion-button">Create a new Ticket</button>
-        </div>
+    <div class="card" style="margin-top: 50px; float: right; width: 640px;margin-bottom: 50px">
+        <div class="card-header">Create a new ticket</div>
+        <table class="GeneratedTable">
+            <tbody>
+                <tr>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                </tr>
+                <tr>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                </tr>
+                <tr>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+    <script src="../js/clock.js" type="module">
+
+    </script>
 
 @endsection('content')
