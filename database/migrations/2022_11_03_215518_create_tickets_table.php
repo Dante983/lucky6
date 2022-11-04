@@ -13,10 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        \DB::table('admin_users')->update([
-            'name' => ['AdminBL', 'AdminBI', 'AdminPRI', 'AdminPRNJ', 'AdminBR', 'AdminLA'],
-            ''
-        ]);
+        Schema::create('tickets', function (Blueprint $table) {
+            $table->id();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -26,8 +26,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('table', function (Blueprint $table) {
-            //
-        });
+        Schema::dropIfExists('tickets');
     }
 };
