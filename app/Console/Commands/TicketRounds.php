@@ -54,10 +54,5 @@ class TicketRounds extends Command
         ]);
         Log::info("Cron is working fine!");
 
-        /*
-           Write your database logic we bellow:
-           Item::create(['name'=>'hello new']);
-        */
-//        return Command::SUCCESS;
     }
 }
