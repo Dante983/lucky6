@@ -36,76 +36,84 @@
     <div class="card" style="margin-top: 50px">
         <div class="card-header">Tickets</div>
         <div class="card-body">
-{{--            <table class="GeneratedTable">--}}
-{{--                <tbody>--}}
-{{--                <tr>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                </tr>--}}
-{{--                <tr>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>6 <input type="checkbox" name="number[6]"></td>--}}
-{{--                </tr>--}}
-{{--                <tr>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td>Cell</td>--}}
-{{--                    <td style="color: white; background-color: white; border-radius: 0;"></td>--}}
-{{--                    <td style="color: white; background-color: white; border-radius: 0;"></td>--}}
-{{--                </tr>--}}
-{{--                </tbody>--}}
-{{--            </table>--}}
-            <table>
+
+            <div >
+                <div name="round_numbers" id="round_number" class="form-control">
+                    @foreach ($round_numbers as $item)
+                        <p> {{$item}} </p>
+                    @endforeach
+                </div>
+            </div>
+            <table class="GeneratedTable">
                 <tbody>
-                <?php for ($i = 0; $i < 10; $i++) : ?>
                 <tr>
-                        <?php for ($k = 0; $k < 10; $k++) : ?>
-                        <?php $num = rand(1, 10); ?>
-                    <td style="color: <?= $num < 5 ? 'red' : 'green'; ?>; padding-bottom: 5px; padding-left: 10px"><?= $num; ?></td>
-                    <?php endfor; ?>
+                    <td><input type="checkbox" name="number[1]">Cell</td>
+                    <td><input type="checkbox" name="number[2]">Cell</td>
+                    <td><input type="checkbox" name="number[3]">Cell</td>
+                    <td><input type="checkbox" name="number[4]">Cell</td>
+                    <td><input type="checkbox" name="number[5]">Cell</td>
+                    <td><input type="checkbox" name="number[6]">Cell</td>
+                    <td><input type="checkbox" name="number[7]">Cell</td>
+                    <td><input type="checkbox" name="number[8]">Cell</td>
+                    <td><input type="checkbox" name="number[9]">Cell</td>
+                    <td><input type="checkbox" name="number[10]">Cell</td>
+                    <td><input type="checkbox" name="number[11]">Cell</td>
+                    <td><input type="checkbox" name="number[12]">Cell</td>
+                    <td><input type="checkbox" name="number[13]">Cell</td>
+                    <td><input type="checkbox" name="number[14]">Cell</td>
+                    <td><input type="checkbox" name="number[15]">Cell</td>
+                    <td><input type="checkbox" name="number[16]">Cell</td>
                 </tr>
-                <?php endfor; ?>
+                <tr>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>6 <input type="checkbox" name="number[6]"></td>
+                </tr>
+                <tr>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td>Cell</td>
+                    <td style="color: white; background-color: white; border-radius: 0;"></td>
+                    <td style="color: white; background-color: white; border-radius: 0;"></td>
+                </tr>
                 </tbody>
             </table>
+{{--            <table>--}}
+{{--                <tbody>--}}
+{{--                <?php for ($i = 0; $i < 10; $i++) : ?>--}}
+{{--                <tr>--}}
+{{--                        <?php for ($k = 0; $k < 10; $k++) : ?>--}}
+{{--                        <?php $num = rand(1, 10); ?>--}}
+{{--                    <td style="color: <?= $num < 5 ? 'red' : 'green'; ?>; padding-bottom: 5px; padding-left: 10px"><?= $num; ?></td>--}}
+{{--                    <?php endfor; ?>--}}
+{{--                </tr>--}}
+{{--                <?php endfor; ?>--}}
+{{--                </tbody>--}}
+{{--            </table>--}}
         </div>
     </div>
 
@@ -118,10 +126,18 @@
     </div>
 
     <div class="card" style="margin-top: 50px; float: right; width: 640px">
-        <div class="card-header">Create ticket</div>
-        <div class="card-body">
-            <button class="accordion-button">Create a new Ticket</button>
-        </div>
+        <form method="POST" action="{{ route("submit.ticket") }}">
+            @csrf
+
+            <label for="ticketNum">Choose Ticket Numbers:</label><br>
+            <input type="number" min="1" max="48" step="1" id="ticketNum" name="numbers[]"><br>
+            <input type="number" min="1" max="48" step="1" id="ticketNum" name="numbers[]"><br>
+            <input type="number" min="1" max="48" step="1" id="ticketNum" name="numbers[]"><br>
+            <input type="number" min="1" max="48" step="1" id="ticketNum" name="numbers[]"><br>
+            <input type="number" min="1" max="48" step="1" id="ticketNum" name="numbers[]"><br>
+            <input type="number" min="1" max="48" step="1" id="ticketNum" name="numbers[]"><br>
+            <input type="submit">
+        </form>
     </div>
 
 @endsection('content')

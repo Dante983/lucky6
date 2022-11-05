@@ -10,8 +10,11 @@ use Laravel\Sanctum\HasApiTokens;
 
 class AdminUsers extends Authenticatable
 {
+    const REGULAR_ADMIN = 1;
+    const SUPER_ADMIN = 0;
     use HasApiTokens, HasFactory, Notifiable;
     protected $primaryKey = 'id';
+
     /**
      * The attributes that are mass assignable.
      *
@@ -22,7 +25,8 @@ class AdminUsers extends Authenticatable
         'email',
         'password',
         'location_id',
-        'customer_id'
+        'customer_id',
+        'admin_type'
     ];
 
     /**

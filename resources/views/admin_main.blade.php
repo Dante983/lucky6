@@ -22,16 +22,24 @@
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin_login') }}">Login</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ route('admin_register') }}">Register</a>
-                    </li>
+{{--                    <li class="nav-item">--}}
+{{--                        <a class="nav-link" href="{{ route('admin_register') }}">Register</a>--}}
+{{--                    </li>--}}
 
                 @else
 
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('admin_logout') }}">Logout</a>
                     </li>
-
+                    @if(Auth::guard('admin')->user()->admin_type == 0)
+                        <li>
+                            <a class="nav-link" style="float: right" href="{{ route('admin_register') }}">Register Admin</a>
+                        </li>
+                    @elseif(Auth::guard('admin')->user()->admin_type == 1)
+                        <li>
+                            <a class="nav-link" style="float: right" href="{{ route('registration') }}">Register User</a>
+                        </li>
+                    @endif
                 @endguest
             </ul>
 

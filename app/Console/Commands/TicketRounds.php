@@ -32,27 +32,61 @@ class TicketRounds extends Command
      */
     public function handle()
     {
-//        $locations = Locations::query()->get('id')->toArray();
-        $active_round = Round::query()->where('active', '=', 1)->pluck('id')->first();
+        $locations = Locations::query()->get();
 
-        $numbers = range(0, 48);
-        shuffle($numbers);
-        $result = array_slice($numbers, 19);
+        foreach ($locations as $location) {
+            $active_round = Round::query()->where('active', '=', 1)
+                ->where('location_id', '=', $location->id)
+                ->first();
 
-        if ($active_round == 1) {
-            Round::query()->where('id', '=', $active_round)->update(
-                [
-                    'active' => 0,
-                    'numbers' => $result,
-                    'updated_at' => Carbon::now()
+            $numbers = range(1, 48);
+            shuffle($numbers);
+            $result = array_slice($numbers, 18);
+
+            if (Ticket::all()->isEmpty()){
+                    Round::query()->insert([
+                        'location_id' => $location->id,
+                        'active' => 1,
+                    ]);
+            } else {
+                if ($active_round['active'] == 1 || $active_round['active'] == null) {
+                    $active_round->update([
+                        'active' => 0,
+                        'numbers' => $result,
+                        'updated_at' => Carbon::now()
+                    ]);
+                }
+
+                Round::query()->insert([
+                    'active' => 1,
+                    'location_id' => $location->id,
+                    'created_at' => Carbon::now()
                 ]);
+            }
+
         }
-//
-        Round::query()->insert([
-            'active' => 1,
-            'created_at' => Carbon::now()
-        ]);
-        Log::info("Cron is working fine!");
+
+        $tickets = Ticket::query()->where('hits', '=', '')->orWhereNull('hits')->get();
+        foreach ($tickets as $ticket) {
+            $as = Round::query()->where('id', '=', $ticket->id)->pluck('numbers')->first();
+            $qa  =str_replace('[', ',',$as);
+            $a =  str_replace(']', ',',$qa);
+            $b = explode(',', $a);
+
+            $n  =str_replace('[', ',',$ticket->numbers);
+            $g =  str_replace(']', ',',$n);
+            $i = str_replace('"', ',', $g);
+            $d = str_replace(' ', ',', $i);
+            $h = explode(',', $d);
+            $filtered = array_values(array_filter($h));
+
+           $hits = json_decode(json_encode(array_intersect($filtered, $b)), true);
+           $arhi = array_values($hits);
+
+            $ticket->where('id', '=', $ticket->id)->update([
+               'hits' => $arhi
+            ]);
+        }
 
     }
 }

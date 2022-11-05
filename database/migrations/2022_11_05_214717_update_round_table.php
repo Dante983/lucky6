@@ -13,9 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('rounds', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+        Schema::table('rounds', function (Blueprint $table){
+            $table->integer('to_show');
+            $table->integer('round_id');
+
         });
     }
 
@@ -26,6 +27,10 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('rounds');
+        Schema::table('rounds', function (Blueprint $table){
+            $table->dropColumn('to_show');
+            $table->dropColumn('round_id');
+
+        });
     }
 };

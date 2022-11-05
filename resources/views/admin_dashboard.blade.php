@@ -8,6 +8,11 @@
         <div class="card-body">
 
             Welcome {{Auth::guard('admin')->user()->name}}. You are Login in to your Lucky 6 account.
+            <p>
+                @if(Auth::guard('admin')->user()->admin_type == 0)
+                    ovo vidi samo super admin
+                @endif
+            </p>
         </div>
     </div>
     <div class="card">

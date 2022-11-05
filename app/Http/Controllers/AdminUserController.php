@@ -4,11 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\AdminUsers;
 use App\Models\Locations;
+use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Session;
+
 
 class AdminUserController extends Controller
 {
@@ -121,13 +123,20 @@ class AdminUserController extends Controller
             'name'        =>  $data['name'],
             'email'       =>  $data['email'],
             'password'    => Hash::make($data['password']),
-            'location_id' => $data['location']
+            'location_id' => $data['location'],
+            'admin_type'  => AdminUsers::REGULAR_ADMIN
         ]);
 
 //        Locations::query()->where('id', '=', $data['location'])->increment('users');
 //        Locations::query()->where('id', '=', $data['location'])->update(['updated_at' => Carbon::now()]);
 
-        return redirect('admin_login')->with('success', 'Registration Completed, now you can login');
+        return redirect('admin_dashboard')->with('success', 'Registration Completed, now you can login');
+    }
+
+    function registration() {
+        $locations = Locations::query()->select('id', 'city')->get();
+
+        return view('registration', compact('locations'));
     }
 
     function admin_validate_login(Request $request) {
@@ -154,5 +163,48 @@ class AdminUserController extends Controller
         }
 
         return redirect('admin_login')->with('success', 'You are not allowed to access');
+    }
+
+    function validate_registration(Request $request, AdminUsers $adminUsers) {
+        $request->validate([
+            'name'         =>   'required',
+            'email'        =>   'required|email|unique:users',
+            'password'     =>   'required|min:6',
+            'location'     =>   'required'
+        ]);
+
+        $data = $request->all();
+//        $get_admin_id = \Auth::id();
+        $admin_id = Locations::query()->where('id', '=', $data['location'])->pluck('id')->first();
+
+        User::create([
+            'name'  =>  $data['name'],
+            'email' =>  $data['email'],
+            'password' => Hash::make($data['password']),
+            'location_id' => $data['location'],
+            'admin_id' => $admin_id
+        ]);
+
+        Locations::query()->where('id', '=', $data['location'])->increment('users');
+        Locations::query()->where('id', '=', $data['location'])->update(['updated_at' => Carbon::now()]);
+
+        return redirect('admin_dashboard')->with('success', 'Registration Completed, now you can login');
+    }
+
+    function validate_login(Request $request) {
+
+        $request->validate([
+            'email'     =>  'required',
+            'password'  =>  'required'
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if(Auth::attempt($credentials))
+        {
+            return redirect('dashboard');
+        }
+
+        return redirect('login')->with('success', 'Login details are not valid');
     }
 }

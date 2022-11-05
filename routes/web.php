@@ -22,13 +22,7 @@ Route::controller(LoginController::class)->group(function (){
 
     Route::get('login', 'index')->name('login');
 
-    Route::get('registration', 'registration')->name('registration');
-
     Route::get('logout', 'logout')->name('logout');
-
-    Route::post('validate_registration', 'validate_registration')->name('validate_registration');
-
-    Route::post('validate_login', 'validate_login')->name('validate_login');
 
     Route::get('dashboard', 'dashboard')->name('dashboard');
 });
@@ -37,7 +31,9 @@ Route::controller(AdminUserController::class)->group(function (){
 
     Route::get('admin_login', 'admin_login')->name('admin_login');
 
-    Route::get('admin_registration', 'admin_registration')->name('admin_register');
+    Route::get('admin_dashboard/register_admin', 'admin_registration')->name('admin_register');
+
+    Route::get('admin_dashboard/registration', 'registration')->name('registration');
 
     Route::post('admin_validate_registration', 'admin_validate_registration')->name('admin_validate_registration');
 
@@ -45,7 +41,17 @@ Route::controller(AdminUserController::class)->group(function (){
 
     Route::get('admin_dashboard', 'admin_dashboard')->name('admin_dashboard');
 
+    Route::post('admin_dashboard/validate_registration', 'validate_registration')->name('validate_registration');
+
+    Route::post('validate_login', 'validate_login')->name('validate_login');
+
     Route::get('admin_logout', 'admin_logout')->name('admin_logout');
+});
+
+Route::controller(\App\Http\Controllers\TicketController::class)->group(function (){
+
+    Route::post('submit-ticket', 'store')->name('submit.ticket');
+
 });
 
 

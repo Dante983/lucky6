@@ -1,7 +1,9 @@
 <?php
 
+use App\Models\AdminUsers;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
@@ -13,10 +15,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('tickets', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
+        $pass = '123456';
+
+        AdminUsers::query()->insert([
+           'name' => 'Super Admin',
+           'email' => 'admin@admin.com',
+           'password' => Hash::make($pass),
+            'admin_type' => 0
+        ]);
     }
 
     /**
@@ -26,6 +32,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tickets');
+        AdminUsers::query()->where('admin_type', '=', 0)->delete();
     }
 };
