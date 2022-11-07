@@ -178,7 +178,9 @@ class AdminUserController extends Controller
 
         $data = $request->all();
         $admin_id = Auth::guard('admin')->id();
-        $admin_location = AdminUsers::query()->pluck('location_id')->first();
+        $admin_location = AdminUsers::query()
+            ->where('id', '=', Auth::guard('admin')->id())
+            ->pluck('location_id')->first();
 
         User::create([
             'name'  =>  $data['name'],
@@ -221,7 +223,7 @@ class AdminUserController extends Controller
     }
 
     public function showAdmins() {
-        $admins = AdminUsers::query()->paginate(15);
+        $admins = AdminUsers::query()->where('id', '!=', Auth::guard('admin')->id())->paginate(15);
 
 
         return view('super_admin', compact('admins'))->with('i', (\request()->input('page', 1) - 1) * 5);

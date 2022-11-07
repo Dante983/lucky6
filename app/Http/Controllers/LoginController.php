@@ -32,7 +32,6 @@ class LoginController extends Controller
             ->leftJoin('rounds as r', 'tickets.round_id', '=', 'r.id')
             ->paginate(5);
 
-//F
         return view('dashboard', compact('ticket'))->with('i', (\request()->input('page', 1) - 1) * 5);
     }
 

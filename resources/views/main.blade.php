@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Lucky 6</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://code.jquery.com/jquery-1.9.0.min.js"></script>
+    <script src="https://raw.github.com/jylauril/jquery-runner/master/build/jquery.runner-min.js"></script>
 </head>
 <body>
 
@@ -37,7 +39,7 @@
         </div>
         @guest
         @else
-            <span style="float: right">User: {{Auth::user()->name}} <br> ID:{{Auth::id()}}</span>
+            <span style="float: right">User: {{Auth::user()->name}} <br> ID:{{Auth::id()}} <br> Budget: {{Auth::user()->budget}}</span>
         @endguest
     </div>
 </nav>

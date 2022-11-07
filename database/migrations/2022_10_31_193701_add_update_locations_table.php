@@ -14,16 +14,16 @@ return new class extends Migration
      */
     public function up()
     {
-        $data = [
-            ['city' => 'Banja Luka', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
-            ['city' => 'Bijeljina', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
-            ['city' => 'Prijedor', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
-            ['city' => 'Prnjavor', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
-            ['city' => 'Brcko', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
-            ['city' => 'Laktasi', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
-        ];
+//        $data = [
+//            ['city' => 'Banja Luka', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
+//            ['city' => 'Bijeljina', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
+//            ['city' => 'Prijedor', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
+//            ['city' => 'Prnjavor', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
+//            ['city' => 'Brcko', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
+//            ['city' => 'Laktasi', 'updated_at' => \Carbon\Carbon::now(), 'created_at' => \Carbon\Carbon::now()],
+//        ];
 
-        \DB::table('locations')->insert($data);
+//        \DB::table('locations')->insert($data);
         Schema::drop('failed_jobs');
         Schema::drop('password_resets');
         Schema::drop('personal_access_tokens');
