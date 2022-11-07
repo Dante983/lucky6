@@ -15,15 +15,56 @@
             </p>
         </div>
     </div>
-    <div class="card">
-        <div class="card-header">Tickets</div>
+    <div class="card" style="margin: 10px">
+        <div class="card-header">Users:</div>
+        <div class="row">
+            <div>
+                <a href="{{ route('show_users') }}"></a>
+            </div>
+        </div>
         <div class="card-body">
-            <table>
+            <table class="table table-bordered">
                 <tr>
-                    <th></th>
+                    <th>ID</th>
+                    <th>Name:</th>
+                    <th>Email:</th>
+                    <th>Budget:</th>
+                    <th>Created at:</th>
                 </tr>
+                @if($users != null)
+                    @foreach($users as $row)
+
+                        <tr>
+                            <th>{{$row->id}}</th>
+                            <th>{{$row->name}}</th>
+                            <th>{{$row->email}}</th>
+                            <th>{{$row->budget}}</th>
+                            <th>{{$row->created_at}}</th>
+                        </tr>
+
+                    @endforeach
+                @else
+                    <tr>
+                        <td>No data</td>
+                    </tr>
+                @endif
             </table>
+            {!! $users->links() !!}
         </div>
     </div>
 
-@endsection('content')
+    <div class="card">
+        <div class="card-header">Tickets</div>
+            <div class="card-body">
+                <a href="{{ route('show_tickets') }}" class="nav-link">Show Tickets</a>
+            </div>
+    </div>
+@if(Auth::guard('admin')->user()->admin_type == 0)
+    <div class="card">
+        <div class="card-header">Admins</div>
+            <div class="card-body">
+                <a href="{{ route('show_admins') }}" class="nav-link">Show Admins</a>
+            </div>
+    </div>
+@endif
+@endsection()

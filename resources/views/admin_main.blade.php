@@ -40,10 +40,20 @@
                             <a class="nav-link" style="float: right" href="{{ route('registration') }}">Register User</a>
                         </li>
                     @endif
+                    <li>
+                        <a class="nav-link" href="{{ url('/admin_dashboard') }}" >Dashboard</a>
+                    </li>
                 @endguest
             </ul>
 
         </div>
+        @guest
+        @else
+            @if(Auth::guard('admin')->user()->id != null)
+                <span style="float: right">User: {{Auth::guard('admin')->user()->name}}<br>
+                ID:{{Auth::guard('admin')->user()->id}}</span>
+            @endif
+        @endguest
     </div>
 </nav>
 <div class="container mt-5">

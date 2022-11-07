@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\AdminUsers;
 use App\Models\Locations;
+use App\Models\Ticket;
 use App\Models\User;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -103,7 +104,7 @@ class AdminUserController extends Controller
     function admin_logout() {
         Session::flush();
 
-        Auth::logout();
+        Auth::guard('admin')->logout();
 
         return Redirect('admin_login');
     }
@@ -116,19 +117,22 @@ class AdminUserController extends Controller
             'password'     =>   'required|min:6',
             'location'     =>   'required'
         ]);
-
         $data = $request->all();
+
+        Locations::query()->insert([
+            'city' => $data['location'],
+            'created_at' => Carbon::now(),
+            'updated_at' => Carbon::now()
+        ]);
+        $last_id = Locations::query()->latest('created_at')->first('id');
 
         AdminUsers::create([
             'name'        =>  $data['name'],
             'email'       =>  $data['email'],
             'password'    => Hash::make($data['password']),
-            'location_id' => $data['location'],
+            'location_id' => $last_id->id,
             'admin_type'  => AdminUsers::REGULAR_ADMIN
         ]);
-
-//        Locations::query()->where('id', '=', $data['location'])->increment('users');
-//        Locations::query()->where('id', '=', $data['location'])->update(['updated_at' => Carbon::now()]);
 
         return redirect('admin_dashboard')->with('success', 'Registration Completed, now you can login');
     }
@@ -165,46 +169,61 @@ class AdminUserController extends Controller
         return redirect('admin_login')->with('success', 'You are not allowed to access');
     }
 
-    function validate_registration(Request $request, AdminUsers $adminUsers) {
+    function validate_registration(Request $request) {
         $request->validate([
             'name'         =>   'required',
             'email'        =>   'required|email|unique:users',
-            'password'     =>   'required|min:6',
-            'location'     =>   'required'
+            'password'     =>   'required|min:6'
         ]);
 
         $data = $request->all();
-//        $get_admin_id = \Auth::id();
-        $admin_id = Locations::query()->where('id', '=', $data['location'])->pluck('id')->first();
+        $admin_id = Auth::guard('admin')->id();
+        $admin_location = AdminUsers::query()->pluck('location_id')->first();
 
         User::create([
             'name'  =>  $data['name'],
             'email' =>  $data['email'],
             'password' => Hash::make($data['password']),
-            'location_id' => $data['location'],
+            'location_id' => $admin_location,
             'admin_id' => $admin_id
         ]);
 
-        Locations::query()->where('id', '=', $data['location'])->increment('users');
-        Locations::query()->where('id', '=', $data['location'])->update(['updated_at' => Carbon::now()]);
+        Locations::query()->where('id', '=', $admin_location)->increment('users');
+        Locations::query()->where('id', '=', $admin_location)->update(['updated_at' => Carbon::now()]);
 
         return redirect('admin_dashboard')->with('success', 'Registration Completed, now you can login');
     }
 
-    function validate_login(Request $request) {
-
-        $request->validate([
-            'email'     =>  'required',
-            'password'  =>  'required'
-        ]);
-
-        $credentials = $request->only('email', 'password');
-
-        if(Auth::attempt($credentials))
-        {
-            return redirect('dashboard');
+    public function showUsers() {
+        if (Auth::guard('admin')->user()->admin_type == 0) {
+            $users = User::query()->paginate(5);
+        } else {
+            $users = User::query()
+                ->where('admin_id', '=', Auth::guard('admin')->id())
+                ->paginate(5);
         }
 
-        return redirect('login')->with('success', 'Login details are not valid');
+        return view('admin_dashboard', compact('users'))->with('i', (\request()->input('page', 1) - 1) * 5);
+    }
+
+    public function showTickets() {
+        if (Auth::guard('admin')->user()->admin_type == 0) {
+            $tickets = Ticket::query()
+                ->leftJoin('rounds as r', 'tickets.round_id', '=', 'r.id')
+                ->paginate(15);
+        } else {
+            $tickets = Ticket::query()
+                ->where('location_id', '=', Auth::guard('admin')->user()->location_id)
+                ->paginate(15);
+        }
+
+        return view('admin_users', compact('tickets'))->with('i', (\request()->input('page', 1) - 1) * 5);
+    }
+
+    public function showAdmins() {
+        $admins = AdminUsers::query()->paginate(15);
+
+
+        return view('super_admin', compact('admins'))->with('i', (\request()->input('page', 1) - 1) * 5);
     }
 }

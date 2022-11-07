@@ -34,57 +34,49 @@ class TicketRounds extends Command
     {
         $locations = Locations::query()->get();
 
-        foreach ($locations as $location) {
-            $active_round = Round::query()->where('active', '=', 1)
-                ->where('location_id', '=', $location->id)
-                ->first();
-
-            $numbers = range(1, 48);
-            shuffle($numbers);
-            $result = array_slice($numbers, 18);
-
-            if (Ticket::all()->isEmpty()){
-                    Round::query()->insert([
-                        'location_id' => $location->id,
-                        'active' => 1,
-                    ]);
-            } else {
-                if ($active_round['active'] == 1 || $active_round['active'] == null) {
-                    $active_round->update([
-                        'active' => 0,
-                        'numbers' => $result,
-                        'updated_at' => Carbon::now()
-                    ]);
-                }
-
-                Round::query()->insert([
-                    'active' => 1,
-                    'location_id' => $location->id,
-                    'created_at' => Carbon::now()
-                ]);
-            }
-
-        }
+//        foreach ($locations as $location) {
+//            $active_round = Round::query()->where('active', '=', 1)
+//                ->where('location_id', '=', $location->id)
+//                ->first();
+//
+//            $numbers = range(1, 48);
+//            shuffle($numbers);
+//            $result = array_slice($numbers, 18);
+//
+//            if (Ticket::all()->isEmpty()){
+//                    Round::query()->insert([
+//                        'location_id' => $location->id,
+//                        'active' => 1,
+//                    ]);
+//            } else {
+//                if ($active_round['active'] == 1 || $active_round['active'] == null) {
+//                    $active_round->update([
+//                        'active' => 0,
+//                        'numbers' => $result,
+//                        'updated_at' => Carbon::now()
+//                    ]);
+//                }
+//
+//                Round::query()->insert([
+//                    'active' => 1,
+//                    'location_id' => $location->id,
+//                    'created_at' => Carbon::now()
+//                ]);
+//            }
+//
+//        }
 
         $tickets = Ticket::query()->where('hits', '=', '')->orWhereNull('hits')->get();
         foreach ($tickets as $ticket) {
-            $as = Round::query()->where('id', '=', $ticket->id)->pluck('numbers')->first();
-            $qa  =str_replace('[', ',',$as);
-            $a =  str_replace(']', ',',$qa);
-            $b = explode(',', $a);
+            $as = Round::query()->where('id', '=', $ticket->id)->pluck('lucky_numbers')->first();
+            $result_a = json_decode($as);
+            $result_b = json_decode($ticket->user_numbers);
 
-            $n  =str_replace('[', ',',$ticket->numbers);
-            $g =  str_replace(']', ',',$n);
-            $i = str_replace('"', ',', $g);
-            $d = str_replace(' ', ',', $i);
-            $h = explode(',', $d);
-            $filtered = array_values(array_filter($h));
-
-           $hits = json_decode(json_encode(array_intersect($filtered, $b)), true);
-           $arhi = array_values($hits);
+            $result_total = array_intersect($result_a, $result_b);
+            $formated = implode(',', $result_total);
 
             $ticket->where('id', '=', $ticket->id)->update([
-               'hits' => $arhi
+               'hits' => $formated
             ]);
         }
 

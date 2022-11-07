@@ -42,11 +42,10 @@
 
                         <div class="form-group mb-3 dropdown">
                             <div >
-                                <select name="location" id="location_id" class="form-control">
-                                    @foreach ($locations as $item)
-                                        <option value="{{$item->id}}">{{$item->city}} </option>
-                                    @endforeach
-                                </select>
+                                <input name="location" type="text" class="form-control" placeholder="Location">
+                                @if($errors->has('location'))
+                                    <span class="text-danger">{{ $errors->first('location') }}</span>
+                                @endif
                             </div>
                         </div>
 

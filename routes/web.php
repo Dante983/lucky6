@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\TicketController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\AdminUserController;
@@ -24,7 +25,11 @@ Route::controller(LoginController::class)->group(function (){
 
     Route::get('logout', 'logout')->name('logout');
 
+    Route::post('validate_login', 'validate_login')->name('validate_login');
+
     Route::get('dashboard', 'dashboard')->name('dashboard');
+
+    Route::get('dashboard', 'ticketShow')->name('ticket_show');
 });
 
 Route::controller(AdminUserController::class)->group(function (){
@@ -41,14 +46,18 @@ Route::controller(AdminUserController::class)->group(function (){
 
     Route::get('admin_dashboard', 'admin_dashboard')->name('admin_dashboard');
 
-    Route::post('admin_dashboard/validate_registration', 'validate_registration')->name('validate_registration');
+    Route::get('admin_dashboard', 'showUsers')->name('show_users');
 
-    Route::post('validate_login', 'validate_login')->name('validate_login');
+    Route::get('super_admin', 'showAdmins')->name('show_admins');
+
+    Route::get('admin_dashboard/show_tickets', 'showTickets')->name('show_tickets');
+
+    Route::post('admin_dashboard/validate_registration', 'validate_registration')->name('validate_registration');
 
     Route::get('admin_logout', 'admin_logout')->name('admin_logout');
 });
 
-Route::controller(\App\Http\Controllers\TicketController::class)->group(function (){
+Route::controller(TicketController::class)->group(function (){
 
     Route::post('submit-ticket', 'store')->name('submit.ticket');
 

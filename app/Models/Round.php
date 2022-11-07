@@ -8,5 +8,5 @@ use Illuminate\Database\Eloquent\Model;
 class Round extends Model
 {
     use HasFactory;
-    protected $fillable = ['location_id', 'numbers', 'active'];
+    protected $fillable = ['location_id', 'lucky_numbers', 'active'];
 }

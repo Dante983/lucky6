@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\AdminUsers;
 use App\Models\Locations;
 use App\Models\Round;
+use App\Models\Ticket;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -14,11 +15,11 @@ use Illuminate\Support\Facades\Session;
 
 class LoginController extends Controller
 {
-    function index() {
+    public function index() {
         return view('login');
     }
 
-    function logout() {
+    public function logout() {
         Session::flush();
 
         Auth::logout();
@@ -26,20 +27,39 @@ class LoginController extends Controller
         return Redirect('login');
     }
 
+    public function ticketShow() {
+        $ticket = Ticket::query()->where('user_id', '=', Auth::id())
+            ->leftJoin('rounds as r', 'tickets.round_id', '=', 'r.id')
+            ->paginate(5);
 
-    function dashboard() {
+//F
+        return view('dashboard', compact('ticket'))->with('i', (\request()->input('page', 1) - 1) * 5);
+    }
+
+    public function dashboard() {
         if(Auth::check())
         {
-            $user = User::query()->where('id', '=', Auth::id())->get('location_id')->first();
-            $location = Locations::query()->where('id', '=', $user->location_id)->first();
-            $round_numbers = Round::query()
-                ->where('location_id', '=', $location)
-                ->where('active', '=', 0)
-                ->latest('updated_at');
 
-            return view('dashboard', compact('round_numbers'));
+            return view('dashboard');
         }
 
         return redirect('login')->with('success', 'You need to log in to access');
+    }
+
+    function validate_login(Request $request) {
+
+        $request->validate([
+            'email'     =>  'required',
+            'password'  =>  'required'
+        ]);
+
+        $credentials = $request->only('email', 'password');
+
+        if(Auth::attempt($credentials))
+        {
+            return redirect('dashboard');
+        }
+
+        return redirect('login')->with('success', 'Login details are not valid');
     }
 }

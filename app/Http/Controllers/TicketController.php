@@ -39,14 +39,20 @@ class TicketController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @return Application|Redirector|RedirectResponse
+     * @return false|Application|RedirectResponse|Redirector
      */
     public function store(Request $request)
     {
 
-        $request->validate([
-           'numbers' => 'required|min:1|max:48', 'distinct:strict'
-        ]);
+        try {
+            $request->validate([
+                'numbers' => 'required|nullable|array|min:1|max:48',
+                'numbers.*' => 'required|int|distinct'
+            ]);
+        } catch (\Exception $exception) {
+            dd($exception->getMessage());
+        }
+
         $user = User::query()->where('id', '=', Auth::id())->first();
         $round = Round::query()
             ->where('active', '=', 1)
@@ -57,7 +63,7 @@ class TicketController extends Controller
         Ticket::query()->insert([
             'round_id' => $round->id,
             'user_id' => $user->id,
-            'numbers' => json_encode($data['numbers']),
+            'user_numbers' => json_encode($data['numbers']),
             'location_id' => $user->location_id,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

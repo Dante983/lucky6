@@ -1,11 +1,11 @@
-@extends('main')
+@extends('admin_main')
 
 @section('content')
 
     <div class="row justify-content-center">
         <div class="col-md-4">
             <div class="card">
-                <div class="card-header">Registration</div>
+                <div class="card-header">Register User</div>
                 <div class="card-body">
                     <form action="{{ route('validate_registration') }}" method="POST">
                         @csrf
@@ -29,16 +29,6 @@
                             @if($errors->has('password'))
                                 <span class="text-danger">{{ $errors->first('password') }}</span>
                             @endif
-                        </div>
-
-                        <div class="form-group mb-3 dropdown">
-                            <div >
-                                <select name="location" id="location_id" class="form-control">
-                                    @foreach ($locations as $item)
-                                        <option value="{{$item->id}}">{{$item->city}} </option>
-                                    @endforeach
-                                </select>
-                            </div>
                         </div>
 
                         <div class="d-grid mx-auto">

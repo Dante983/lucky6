@@ -22,6 +22,11 @@
             padding: 3px;
             border-radius: 15px;
         }
+        p {
+            text-align: center;
+            font-size: 60px;
+            margin-top: 0px;
+        }
     </style>
 
     <div class="card">
@@ -32,104 +37,50 @@
         </div>
     </div>
 
-{{--    <div class="card-body" style="position: relative; float: right">Vrijeme</div>--}}
-    <div class="card" style="margin-top: 50px">
-        <div class="card-header">Tickets</div>
-        <div class="card-body">
-
-            <div >
-                <div name="round_numbers" id="round_number" class="form-control">
-                    @foreach ($round_numbers as $item)
-                        <p> {{$item}} </p>
-                    @endforeach
-                </div>
+    <div class="card" style="margin: 10px">
+        <div class="card-header">Tickets:</div>
+        <div class="row">
+            <div>
+                <a href="{{ route('ticket_show') }}"></a>
             </div>
-            <table class="GeneratedTable">
-                <tbody>
-                <tr>
-                    <td><input type="checkbox" name="number[1]">Cell</td>
-                    <td><input type="checkbox" name="number[2]">Cell</td>
-                    <td><input type="checkbox" name="number[3]">Cell</td>
-                    <td><input type="checkbox" name="number[4]">Cell</td>
-                    <td><input type="checkbox" name="number[5]">Cell</td>
-                    <td><input type="checkbox" name="number[6]">Cell</td>
-                    <td><input type="checkbox" name="number[7]">Cell</td>
-                    <td><input type="checkbox" name="number[8]">Cell</td>
-                    <td><input type="checkbox" name="number[9]">Cell</td>
-                    <td><input type="checkbox" name="number[10]">Cell</td>
-                    <td><input type="checkbox" name="number[11]">Cell</td>
-                    <td><input type="checkbox" name="number[12]">Cell</td>
-                    <td><input type="checkbox" name="number[13]">Cell</td>
-                    <td><input type="checkbox" name="number[14]">Cell</td>
-                    <td><input type="checkbox" name="number[15]">Cell</td>
-                    <td><input type="checkbox" name="number[16]">Cell</td>
-                </tr>
-                <tr>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>6 <input type="checkbox" name="number[6]"></td>
-                </tr>
-                <tr>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td>Cell</td>
-                    <td style="color: white; background-color: white; border-radius: 0;"></td>
-                    <td style="color: white; background-color: white; border-radius: 0;"></td>
-                </tr>
-                </tbody>
-            </table>
-{{--            <table>--}}
-{{--                <tbody>--}}
-{{--                <?php for ($i = 0; $i < 10; $i++) : ?>--}}
-{{--                <tr>--}}
-{{--                        <?php for ($k = 0; $k < 10; $k++) : ?>--}}
-{{--                        <?php $num = rand(1, 10); ?>--}}
-{{--                    <td style="color: <?= $num < 5 ? 'red' : 'green'; ?>; padding-bottom: 5px; padding-left: 10px"><?= $num; ?></td>--}}
-{{--                    <?php endfor; ?>--}}
-{{--                </tr>--}}
-{{--                <?php endfor; ?>--}}
-{{--                </tbody>--}}
-{{--            </table>--}}
         </div>
-    </div>
-
-    <div class="card" style="margin-top: 50px; float: left; width: 640px;height: 100%">
-        <div class="card-header">My Tickets</div>
         <div class="card-body">
-            <p>Prvi tiket</p>
-            <p>drugi tiket</p>
+            <table class="table table-bordered">
+                <tr>
+                    <th>ID</th>
+                    <th>Round:</th>
+                    <th>Yours Numbers:</th>
+                    <th>Round Numbers:</th>
+                    <th>Hits:</th>
+                </tr>
+                @if($ticket != null)
+                    @foreach($ticket as $row)
+
+                        <tr>
+                            <th>{{$row->id}}</th>
+                            <th>{{$row->round_id}}</th>
+                            <th>{{$row->user_numbers}}</th>
+                            <th>{{$row->lucky_numbers}}</th>
+                            <th>{{$row->hits}}</th>
+                        </tr>
+
+                    @endforeach
+                @else
+                    <tr>
+                        <td>No data</td>
+                    </tr>
+                @endif
+            </table>
+            {!! $ticket->links() !!}
         </div>
     </div>
 
-    <div class="card" style="margin-top: 50px; float: right; width: 640px">
+    <div class="card" style="display: inline-block; margin: 10px">
+        <div class="card-header">Create New Ticket:</div>
+        <div class="card-body">
         <form method="POST" action="{{ route("submit.ticket") }}">
             @csrf
 
-            <label for="ticketNum">Choose Ticket Numbers:</label><br>
             <input type="number" min="1" max="48" step="1" id="ticketNum" name="numbers[]"><br>
             <input type="number" min="1" max="48" step="1" id="ticketNum" name="numbers[]"><br>
             <input type="number" min="1" max="48" step="1" id="ticketNum" name="numbers[]"><br>
@@ -139,5 +90,35 @@
             <input type="submit">
         </form>
     </div>
+    </div><div class="card" style="float: right;display: inline-block; margin: 10px">
+        <div class="card-header">Time till new round:</div>
+        <div class="card-body">
+            <div class="countdown"></div>
+    </div>
+    </div>
+
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+    <script>
+        var timer2 = "5:01";
+        var interval = setInterval(function() {
+
+            var timer = timer2.split(':');
+            //by parsing integer, I avoid all extra string processing
+            var minutes = parseInt(timer[0], 10);
+            var seconds = parseInt(timer[1], 10);
+            --seconds;
+            minutes = (seconds < 0) ? --minutes : minutes;
+            seconds = (seconds < 0) ? 59 : seconds;
+            seconds = (seconds < 10) ? '0' + seconds : seconds;
+            //minutes = (minutes < 10) ?  minutes : minutes;
+            $('.countdown').html(minutes + ':' + seconds);
+            if (minutes < 0) clearInterval(interval);
+            //check if both minutes and seconds are 0
+            if ((seconds <= 0) && (minutes <= 0)) clearInterval(interval);
+            timer2 = minutes + ':' + seconds;
+        }, 1000);
+
+    </script>
 
 @endsection('content')
