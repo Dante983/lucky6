@@ -39,7 +39,7 @@
         </div>
         @guest
         @else
-            <span style="float: right">User: {{Auth::user()->name}} <br> ID:{{Auth::id()}} <br> Budget: {{Auth::user()->budget}}</span>
+            <span style="float: right">User: {{Auth::user()->name}} <br> ID:{{Auth::id()}} <br> Budget: ${{Auth::user()->budget}}</span>
         @endguest
     </div>
 </nav>

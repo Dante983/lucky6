@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Round;
 use App\Models\Ticket;
 use App\Models\User;
+use Illuminate\Console\View\Components\Alert;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -43,6 +44,12 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
+
+        if (Auth::user()->budget < 1) {
+
+//            window.alert()
+            return false;
+        }
 
         try {
             $request->validate([

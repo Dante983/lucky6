@@ -173,7 +173,8 @@ class AdminUserController extends Controller
         $request->validate([
             'name'         =>   'required',
             'email'        =>   'required|email|unique:users',
-            'password'     =>   'required|min:6'
+            'password'     =>   'required|min:6',
+            'number'        =>  'integer|size:6'
         ]);
 
         $data = $request->all();
@@ -187,7 +188,8 @@ class AdminUserController extends Controller
             'email' =>  $data['email'],
             'password' => Hash::make($data['password']),
             'location_id' => $admin_location,
-            'admin_id' => $admin_id
+            'admin_id' => $admin_id,
+            'budget' => $data['number']
         ]);
 
         Locations::query()->where('id', '=', $admin_location)->increment('users');
