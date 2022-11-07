@@ -88,7 +88,7 @@
             <input type="number" min="1" max="48" step="1" id="ticketNum" name="numbers[]"><br>
             <input type="number" min="1" max="48" step="1" id="ticketNum" name="numbers[]"><br>
             @if(Auth::user()->budget > 1)
-            <input id="btnSubtract" value="-" onclick="subtract();" type="submit">
+            <input id="btnSubtract" value="Submit" onclick="subtract();" type="submit">
             @else
                 <input disabled type="submit">
                 Not enough money

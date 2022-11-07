@@ -18,6 +18,7 @@
                 <th>Email:</th>
                 <th>Location:</th>
                 <th>Created at:</th>
+                <th></th>
             </tr>
             @if($admins != null)
                 @foreach($admins as $row)
@@ -28,6 +29,7 @@
                         <th>{{$row->email}}</th>
                         <th>{{$row->location_id}}</th>
                         <th>{{$row->created_at}}</th>
+                        <th><a href="{{route('edit.user', $row->id)}}" class="btn btn-warning">Edit</a></th>
                     </tr>
 
                 @endforeach

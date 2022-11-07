@@ -30,6 +30,9 @@
                     <th>Email:</th>
                     <th>Budget:</th>
                     <th>Created at:</th>
+                    @if(Auth::guard('admin')->user()->admin_type == 1)
+                        <th></th>
+                    @endif
                 </tr>
                 @if($users != null)
                     @foreach($users as $row)
@@ -40,6 +43,9 @@
                             <th>{{$row->email}}</th>
                             <th>{{$row->budget}}</th>
                             <th>{{$row->created_at}}</th>
+                            @if(Auth::guard('admin')->user()->admin_type == 1)
+                            <th><a href="{{route('edit.user', $row->id)}}" class="btn btn-warning">Edit</a></th>
+                            @endif
                         </tr>
 
                     @endforeach

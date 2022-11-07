@@ -7,6 +7,8 @@ use App\Models\Locations;
 use App\Models\Ticket;
 use App\Models\User;
 use Carbon\Carbon;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -61,11 +63,18 @@ class AdminUserController extends Controller
      * Show the form for editing the specified resource.
      *
      * @param  \App\Models\AdminUsers  $adminUsers
-     * @return \Illuminate\Http\Response
+     * @return Application|Factory|\Illuminate\Contracts\View\View
      */
-    public function edit(AdminUsers $adminUsers)
+    public function edit($id)
     {
-        //
+        if (Auth::guard('admin')->user()->admin_type == 1){
+            $users = User::find($id);
+            return view('edit_user', compact('users'));
+        } else {
+            $users = AdminUsers::find($id);
+            $locations = Locations::all();
+            return view('edit_user', compact('users', 'locations'));
+        }
     }
 
     /**
@@ -73,11 +82,35 @@ class AdminUserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  \App\Models\AdminUsers  $adminUsers
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, AdminUsers $adminUsers)
+    public function update(Request $request)
     {
-        //
+        $this->validate($request, [
+            'name' => 'required',
+            'email' => 'required|email'
+        ]);
+
+        $data = $request->all();
+//        $locations =
+
+        if (Auth::guard('admin')->user()->admin_type == 1) {
+            $form_data = array(
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'budget' => $data['budget'],
+            );
+        } else {
+            $form_data = array(
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'location_id' => $data['location'],
+            );
+        }
+
+        User::whereId($data['hidden_id'])->update($form_data);
+
+        return redirect('admin_dashboard')->with('success', 'User Updated');
     }
 
     /**
@@ -189,7 +222,7 @@ class AdminUserController extends Controller
             'password' => Hash::make($data['password']),
             'location_id' => $admin_location,
             'admin_id' => $admin_id,
-            'budget' => $data['number']
+            'budget' => $data['budget']
         ]);
 
         Locations::query()->where('id', '=', $admin_location)->increment('users');
@@ -221,7 +254,7 @@ class AdminUserController extends Controller
                 ->paginate(15);
         }
 
-        return view('admin_users', compact('tickets'))->with('i', (\request()->input('page', 1) - 1) * 5);
+        return view('admin_tickets', compact('tickets'))->with('i', (\request()->input('page', 1) - 1) * 5);
     }
 
     public function showAdmins() {

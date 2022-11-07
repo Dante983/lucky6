@@ -55,6 +55,10 @@ Route::controller(AdminUserController::class)->group(function (){
     Route::post('admin_dashboard/validate_registration', 'validate_registration')->name('validate_registration');
 
     Route::get('admin_logout', 'admin_logout')->name('admin_logout');
+
+    Route::get('admin_dashboard/edit_user/{id}', 'edit')->name('edit.user');
+
+    Route::get('update_user', 'update')->name('update.user');
 });
 
 Route::controller(TicketController::class)->group(function (){

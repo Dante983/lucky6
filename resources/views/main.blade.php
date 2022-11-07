@@ -19,27 +19,21 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-
             <ul class="navbar-nav">
                 @guest
-
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
                     </li>
-
                 @else
-
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('logout') }}">Logout</a>
                     </li>
-
                 @endguest
             </ul>
-
         </div>
         @guest
         @else
-            <span style="float: right">User: {{Auth::user()->name}} <br> ID:{{Auth::id()}} <br> Budget: ${{Auth::user()->budget}}</span>
+            <span style="float: right"><strong>User:</strong> {{Auth::user()->name}} ({{Auth::id()}}) <br> <strong>Budget:</strong> ${{Auth::user()->budget}}</span>
         @endguest
     </div>
 </nav>
