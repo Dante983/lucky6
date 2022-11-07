@@ -20,7 +20,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->command('ticket:rounds')
-            ->everyMinute();
+            ->everyFiveMinutes();
     }
 
     /**
