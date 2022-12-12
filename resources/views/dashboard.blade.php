@@ -95,22 +95,64 @@
             @endif
         </form>
     </div>
-    </div><div class="card" style="float: right;display: inline-block; margin: 10px">
+    </div>
+    <div class="card" style="float: right;display: inline-block; margin: 10px">
         <div class="card-header">Time till new round:</div>
         <div class="card-body">
             <span id="runner"></span>
     </div>
+        <h1>Countdown Clock</h1>
+        <div id="clockdiv">
+            <div>
+                <span class="minutes"></span>
+                <div class="smalltext">Minutes</div>
+            </div>
+            <div>
+                <span class="seconds"></span>
+                <div class="smalltext">Seconds</div>
+            </div>
+        </div>
     </div>
 
     <script type="text/javascript">
-        $(document).ready(function(){
-            $('#runner').runner({
-                autostart: true,
-                countdown: true,
-                stopAt: 0,
-                startAt: 30000 // alternatively you could just write: 30*1000
-            });
-        });
+        function getTimeRemaining(endtime) {
+            var t = Date.parse(endtime) - Date.parse(new Date());
+            var seconds = Math.floor((t / 1000) % 60);
+            var minutes = Math.floor((t / 1000 / 60) % 60);
+            return {
+                'minutes': minutes,
+                'seconds': seconds
+            };
+        }
+
+        function initializeClock(id, endtime) {
+            var clock = document.getElementById(id);
+            var minutesSpan = clock.querySelector('.minutes');
+            var secondsSpan = clock.querySelector('.seconds');
+
+            function updateClock() {
+                var t = getTimeRemaining(endtime);
+
+                minutesSpan.innerHTML = ('0' + t.minutes).slice(-2);
+                secondsSpan.innerHTML = ('0' + t.seconds).slice(-2);
+
+                if (t.total <= 0) {
+                    clearInterval(timeinterval);
+                }
+
+                if(t.minutes == 0 && t.seconds ==0) {
+                    console.log('in this func');
+                    deadline = new Date(deadline.getTime() + 5*60000);
+                    initializeClock('clockdiv', deadline);
+                }
+            }
+
+            updateClock();
+            var timeinterval = setInterval(updateClock, 1000);
+        }
+
+        var deadline = new Date(Date.parse(new Date()) + 6 * 1000);
+        initializeClock('clockdiv', deadline);
     </script>
 
 @endsection('content')

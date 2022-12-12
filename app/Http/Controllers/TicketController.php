@@ -45,36 +45,37 @@ class TicketController extends Controller
     public function store(Request $request)
     {
 
-        if (Auth::user()->budget < 1) {
+        if (Auth::user()->budget > 1) {
 
-//            window.alert()
-            return false;
-        }
+            try {
+                $request->validate([
+                    'numbers' => 'required|nullable|array|min:1|max:48',
+                    'numbers.*' => 'required|int|distinct'
+                ]);
+            } catch (\Exception $exception) {
+                dd($exception->getMessage());
+            }
 
-        try {
-            $request->validate([
-                'numbers' => 'required|nullable|array|min:1|max:48',
-                'numbers.*' => 'required|int|distinct'
+            $user = User::query()->where('id', '=', Auth::id())->first();
+            $round = Round::query()
+                ->where('active', '=', 1)
+                ->where('location_id' ,'=', $user->location_id)
+                ->first();
+            $data = $request->all();
+
+            Ticket::query()->insert([
+                'round_id' => $round->id,
+                'user_id' => $user->id,
+                'user_numbers' => json_encode($data['numbers']),
+                'location_id' => $user->location_id,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
-        } catch (\Exception $exception) {
-            dd($exception->getMessage());
+
+            User::query()->where('id', '=', $user->id)->update(['budget' => $user->budget - 1]);
+        } else {
+            echo '<script>alert("Not enough money.")</script>';
         }
-
-        $user = User::query()->where('id', '=', Auth::id())->first();
-        $round = Round::query()
-            ->where('active', '=', 1)
-            ->where('location_id' ,'=', $user->location_id)
-            ->first();
-        $data = $request->all();
-
-        Ticket::query()->insert([
-            'round_id' => $round->id,
-            'user_id' => $user->id,
-            'user_numbers' => json_encode($data['numbers']),
-            'location_id' => $user->location_id,
-            'created_at' => Carbon::now(),
-            'updated_at' => Carbon::now(),
-        ]);
 
         return Redirect('dashboard');
 

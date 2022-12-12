@@ -18,7 +18,7 @@
                     @endif
                     <form action="{{ route('update.user') }}">
                         @csrf
-{{$users}}}}
+
                         <div class="form-group mb-3">
                             <input type="text" name="name" class="form-control" placeholder="Name"
                                    value="{{$users->name}}"/>

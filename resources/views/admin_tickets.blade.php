@@ -29,7 +29,7 @@
                             <th>{{$row->lucky_numbers}}</th>
                             <th>{{$row->hits}}</th>
                         </tr>
-
+{{$row}}
                     @endforeach
                 @else
                     <tr>
