@@ -84,7 +84,5 @@ class TicketRounds extends Command
             }
         }
 
-//        if ()
-
     }
 }

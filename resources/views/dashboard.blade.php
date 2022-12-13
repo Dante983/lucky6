@@ -101,7 +101,6 @@
         <div class="card-body">
             <span id="runner"></span>
     </div>
-        <h1>Countdown Clock</h1>
         <div id="clockdiv">
             <div>
                 <span class="minutes"></span>
